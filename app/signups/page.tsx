@@ -4,14 +4,14 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({
+  const handleSignup = async () => {
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -21,9 +21,19 @@ export default function LoginPage() {
       return;
     }
 
-    alert("وارد شدی");
+    if (data.user) {
+      await supabase.from("profiles").insert([
+        {
+          id: data.user.id,
+          email: data.user.email,
+          role: "user",
+        },
+      ]);
 
-    router.push("/");
+      alert("اکانت ساخته شد");
+
+      router.push("/login");
+    }
   };
 
   return (
@@ -31,7 +41,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white/5 p-8 rounded-3xl">
 
         <h1 className="text-4xl font-black mb-8 text-center">
-          Login
+          Sign Up
         </h1>
 
         <input
@@ -51,10 +61,10 @@ export default function LoginPage() {
         />
 
         <button
-          onClick={handleLogin}
+          onClick={handleSignup}
           className="w-full bg-red-600 hover:bg-red-700 py-4 rounded-2xl font-bold"
         >
-          Login
+          Create Account
         </button>
 
       </div>
