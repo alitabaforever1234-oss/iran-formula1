@@ -1,6 +1,49 @@
-import Link from "next/link"
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
+
+  const [user, setUser] = useState<any>(null);
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+
+    const getUser = async () => {
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      setUser(user);
+
+      if (user) {
+
+        const { data } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        if (data) {
+          setRole(data.role);
+        }
+      }
+    };
+
+    getUser();
+
+  }, []);
+
+  const handleLogout = async () => {
+
+    await supabase.auth.signOut();
+
+    location.reload();
+  };
+
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-xl bg-[#071B3A]/80 border-b border-white/10">
 
@@ -56,10 +99,48 @@ export default function Navbar() {
             جدول
           </Link>
 
+          {!user && (
+            <>
+              <Link
+                href="/login"
+                className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 transition"
+              >
+                Login
+              </Link>
+
+              <Link
+                href="/signup"
+                className="border border-white/20 px-5 py-2 rounded-xl hover:bg-white/10 transition"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <>
+              {role === "admin" && (
+                <Link
+                  href="/admin"
+                  className="bg-yellow-500 text-black px-5 py-2 rounded-xl"
+                >
+                  Admin Panel
+                </Link>
+              )}
+
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 transition"
+              >
+                Logout
+              </button>
+            </>
+          )}
+
         </div>
 
       </div>
 
     </nav>
-  )
+  );
 }
