@@ -81,7 +81,7 @@ useEffect(() => {
       return
     }
 
-    fetchPosts()
+    await fetchPosts()
 
     setLoading(false)
   }
