@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
 
+  const [username, setUsername] = useState("")
   const [user, setUser] = useState<any>(null);
   const [role, setRole] = useState("");
 
@@ -31,11 +32,28 @@ export default function Navbar() {
           setRole(data.role);
         }
       }
+
+      if (user) {
+
+  const { data } = await supabase
+    .from("profiles")
+    .select("username")
+    .eq("id", user.id)
+    .single()
+
+  if (data) {
+    setUsername(data.username)
+  }
+
+}
+
     };
 
     getUser();
 
   }, []);
+
+  
 
   const handleLogout = async () => {
 
@@ -105,37 +123,47 @@ export default function Navbar() {
                 href="/login"
                 className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 transition"
               >
-                Login
+                ورود
               </Link>
 
               <Link
                 href="/signup"
                 className="border border-white/20 px-5 py-2 rounded-xl hover:bg-white/10 transition"
               >
-                Sign Up
+                ثبت نام
               </Link>
             </>
           )}
 
-          {user && (
-            <>
-              {role === "admin" && (
-                <Link
-                  href="/admin"
-                  className="bg-yellow-500 text-black px-5 py-2 rounded-xl"
-                >
-                  Admin Panel
-                </Link>
-              )}
+          {
+  user ? (
 
-              <button
-                onClick={handleLogout}
-                className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 transition"
-              >
-                Logout
-              </button>
-            </>
-          )}
+    <div className="flex items-center gap-4">
+
+      <span className="text-white font-bold">
+        سلام {username}
+      </span>
+
+      <button
+        onClick={handleLogout}
+        className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl"
+      >
+        خروج
+      </button>
+
+    </div>
+
+  ) : (
+
+    <Link
+      href="/login"
+      className="bg-red-600 hover:bg-red-700 px-5 py-3 rounded-xl font-bold"
+    >
+      ورود / ثبت نام
+    </Link>
+
+  )
+}
 
         </div>
 
