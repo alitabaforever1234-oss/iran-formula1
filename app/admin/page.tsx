@@ -158,6 +158,8 @@ if (loading) {
   )
 }
 
+console.log("ADMIN PAGE LOADED")
+
   return (
 
     <div className="min-h-screen p-10 text-white">
