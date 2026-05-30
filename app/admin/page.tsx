@@ -1,11 +1,14 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useState } from "react"
 import { supabase } from "@/lib/supabase"
 
 export default function AdminPage() {
 
+  const router = useRouter()
+  const [loading, setLoading] = useState(true)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [posts, setPosts] = useState<any[]>([])
   const [slug, setSlug] = useState("")
@@ -55,7 +58,36 @@ export default function AdminPage() {
 }
 
 useEffect(() => {
-  fetchPosts()
+
+  async function checkAdmin() {
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      router.push("/login")
+      return
+    }
+
+    const { data } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single()
+
+    if (data?.role !== "admin") {
+      router.push("/")
+      return
+    }
+
+    fetchPosts()
+
+    setLoading(false)
+  }
+
+  checkAdmin()
+
 }, [])
 
 async function deletePost(id: number) {
@@ -116,6 +148,14 @@ async function updatePost() {
 
   }
 
+}
+
+if (loading) {
+  return (
+    <div className="min-h-screen flex items-center justify-center text-white">
+      در حال بررسی...
+    </div>
+  )
 }
 
   return (
