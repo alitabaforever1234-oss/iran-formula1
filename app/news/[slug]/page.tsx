@@ -22,7 +22,7 @@ export default function SingleNewsPage({
       const { data } = await supabase
         .from("posts")
         .select("*")
-        .eq("slug", params.slug)
+        .eq("slug", decodeURIComponent(window.location.pathname.split("/").pop() || ""))
         .single()
 
       if (!data) {
