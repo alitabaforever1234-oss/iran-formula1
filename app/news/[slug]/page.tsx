@@ -1,91 +1,107 @@
 "use client"
 
-const [comments, setComments] = useState<any[]>([])
-const [comment, setComment] = useState("")
-const [user, setUser] = useState<any>(null)
-
-
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { notFound } from "next/navigation"
 
-export default async function SingleNewsPage({
+export default function SingleNewsPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }) {
 
-  const { slug } = await params
-
-  const { data: post } = await supabase
-    .from("posts")
-    .select("*")
-    .eq("slug", slug)
-    .single()
-
-  if (!post) {
-    notFound()
-  }
+  const [post, setPost] = useState<any>(null)
+  const [comments, setComments] = useState<any[]>([])
+  const [comment, setComment] = useState("")
+  const [user, setUser] = useState<any>(null)
 
   useEffect(() => {
 
-  const getUser = async () => {
+    const fetchPost = async () => {
 
-    const { data } = await supabase.auth.getUser()
+      const { data } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("slug", params.slug)
+        .single()
 
-    setUser(data.user)
+      if (!data) {
+        notFound()
+        return
+      }
 
-  }
+      setPost(data)
 
-  const fetchComments = async () => {
+      const { data: commentsData } = await supabase
+        .from("comments")
+        .select("*")
+        .eq("post_id", data.id)
+        .order("created_at", { ascending: false })
 
-    const { data } = await supabase
+      if (commentsData) {
+        setComments(commentsData)
+      }
+
+    }
+
+    const getUser = async () => {
+
+      const { data } = await supabase.auth.getUser()
+
+      setUser(data.user)
+
+    }
+
+    fetchPost()
+    getUser()
+
+  }, [])
+
+  async function addComment() {
+
+    if (!comment.trim()) return
+
+    if (!user) {
+      alert("اول لاگین کن")
+      return
+    }
+
+    const { error } = await supabase
       .from("comments")
-      .select("*")
-      .eq("post_id", post.id)
-      .order("created_at", { ascending: false })
+      .insert([
+        {
+          post_id: post.id,
+          user_id: user.id,
+          content: comment,
+        },
+      ])
 
-    if (data) {
-      setComments(data)
+    if (!error) {
+
+      setComments([
+        {
+          id: Math.random(),
+          content: comment,
+        },
+        ...comments,
+      ])
+
+      setComment("")
+
     }
 
   }
 
-  getUser()
-  fetchComments()
-
-}, [])
-
-async function addComment() {
-
-  if (!comment.trim()) return
-
-  if (!user) {
-    alert("اول لاگین کن")
-    return
+  if (!post) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        Loading...
+      </div>
+    )
   }
-
-  const { error } = await supabase
-    .from("comments")
-    .insert([
-      {
-        post_id: post.id,
-        user_id: user.id,
-        content: comment,
-      },
-    ])
-
-  if (!error) {
-
-    setComment("")
-
-    window.location.reload()
-
-  }
-
-}
 
   return (
+
     <div className="min-h-screen text-white px-8 md:px-16 py-20">
 
       <div className="max-w-4xl mx-auto">
@@ -114,61 +130,55 @@ async function addComment() {
           {post.description}
         </div>
 
+        <div className="mt-16">
 
-      <div className="mt-16">
+          <h2 className="text-3xl font-bold mb-6">
+            کامنت‌ها
+          </h2>
 
-  <h2 className="text-3xl font-bold mb-6">
-    کامنت‌ها
-  </h2>
+          <div className="flex gap-4 mb-8">
 
-  <div className="flex gap-4 mb-8">
+            <input
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="کامنت بنویس..."
+              className="flex-1 bg-white/10 border border-white/10 rounded-xl px-4 py-3"
+            />
 
-    <input
-      value={comment}
-      onChange={(e) => setComment(e.target.value)}
-      placeholder="کامنت بنویس..."
-      className="flex-1 bg-white/10 border border-white/10 rounded-xl px-4 py-3"
-    />
+            <button
+              onClick={addComment}
+              className="bg-red-600 hover:bg-red-700 px-6 rounded-xl"
+            >
+              ارسال
+            </button>
 
-    <button
-      onClick={addComment}
-      className="bg-red-600 hover:bg-red-700 px-6 rounded-xl"
-    >
-      ارسال
-    </button>
+          </div>
 
-  </div>
+          <div className="space-y-4">
 
-  <div className="space-y-4">
+            {comments.map((item) => (
 
-    {comments.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white/5 border border-white/10 rounded-2xl p-4"
+              >
 
-      <div
-        key={item.id}
-        className="bg-white/5 border border-white/10 rounded-2xl p-4"
-      >
+                <p className="text-white">
+                  {item.content}
+                </p>
 
-        <p className="text-white">
-          {item.content}
-        </p>
+              </div>
 
-      </div>
+            ))}
 
-    ))}
+          </div>
 
-  </div>
-
-</div>
+        </div>
 
       </div>
 
     </div>
 
-    
-
   )
 
-
-  
 }
-
