@@ -81,7 +81,7 @@ useEffect(() => {
       return
     }
 
-    await fetchPosts()
+    fetchPosts()
 
     setLoading(false)
   }
@@ -152,13 +152,11 @@ async function updatePost() {
 
 if (loading) {
   return (
-    <div className="min-h-screen flex items-center justify-center text-white">
-      در حال بررسی...
+    <div className="min-h-screen flex items-center justify-center text-white text-3xl font-black">
+      Loading...
     </div>
   )
 }
-
-console.log("ADMIN PAGE LOADED")
 
   return (
 
