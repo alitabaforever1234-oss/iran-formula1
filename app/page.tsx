@@ -64,6 +64,7 @@ export default async function HomePage() {
               category={post.category}
               title={post.title}
               description={post.description}
+              slug={post.slug}
             />
 
           ))}

@@ -33,6 +33,7 @@ export default async function NewsPage() {
             category={post.category}
             title={post.title}
             description={post.description}
+            slug={post.slug}
           />
 
         ))}
