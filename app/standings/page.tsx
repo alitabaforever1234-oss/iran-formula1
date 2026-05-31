@@ -1,43 +1,84 @@
-export default function StandingsPage() {
+import { supabase } from "@/lib/supabase"
+
+export default async function StandingsPage() {
+
+  const { data: standings } = await supabase
+    .from("driver_standings")
+    .select("*")
+    .order("position", { ascending: true })
+
   return (
-    <div className="min-h-screen p-10">
-      <h1 className="text-5xl font-black text-red-500">
+
+    <div className="min-h-screen text-white px-8 md:px-16 py-20">
+
+      <h1 className="text-5xl font-black mb-12">
         جدول رانندگان
       </h1>
 
-      <div className="mt-10 overflow-hidden rounded-3xl border border-white/10">
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5">
 
-        <table className="w-full text-right">
+        <table className="w-full">
 
-          <thead className="bg-white/10">
+          <thead className="bg-white/10 text-right">
+
             <tr>
-              <th className="p-5">رتبه</th>
-              <th className="p-5">راننده</th>
-              <th className="p-5">تیم</th>
-              <th className="p-5">امتیاز</th>
+
+              <th className="p-6">رتبه</th>
+              <th className="p-6">راننده</th>
+              <th className="p-6">تیم</th>
+              <th className="p-6">برد</th>
+              <th className="p-6">سکو</th>
+              <th className="p-6">امتیاز</th>
+
             </tr>
+
           </thead>
 
           <tbody>
 
-            <tr className="border-t border-white/10">
-              <td className="p-5">1</td>
-              <td className="p-5">مکس ورشتپن</td>
-              <td className="p-5">ردبول</td>
-              <td className="p-5 text-red-500 font-bold">331</td>
-            </tr>
+            {standings?.map((driver) => (
 
-            <tr className="border-t border-white/10">
-              <td className="p-5">2</td>
-              <td className="p-5">لندو نوریس</td>
-              <td className="p-5">مک‌لارن</td>
-              <td className="p-5 text-red-500 font-bold">287</td>
-            </tr>
+              <tr
+                key={driver.id}
+                className="border-t border-white/10 hover:bg-white/5 transition"
+              >
+
+                <td className="p-6 text-red-500 font-black">
+                  {driver.position}
+                </td>
+
+                <td className="p-6 font-bold">
+                  {driver.driver_name}
+                </td>
+
+                <td className="p-6 text-gray-300">
+                  {driver.team}
+                </td>
+
+                <td className="p-6">
+                  {driver.wins}
+                </td>
+
+                <td className="p-6">
+                  {driver.podiums}
+                </td>
+
+                <td className="p-6 text-2xl font-black">
+                  {driver.points}
+                </td>
+
+              </tr>
+
+            ))}
 
           </tbody>
 
         </table>
+
       </div>
+
     </div>
+
   )
+
 }
