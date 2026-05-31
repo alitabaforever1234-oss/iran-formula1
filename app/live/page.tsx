@@ -6,6 +6,7 @@ export default function LivePage() {
 
   const [drivers, setDrivers] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [live, setLive] = useState(false)
 
   useEffect(() => {
 
@@ -13,33 +14,77 @@ export default function LivePage() {
 
       try {
 
-        const res = await fetch(
-          "https://api.openf1.org/v1/position?session_key=latest"
+        const sessionRes = await fetch(
+          "https://api.openf1.org/v1/sessions?session_key=latest"
         )
 
-        const data = await res.json()
+        const sessionData = await sessionRes.json()
 
-        if (data.length > 0) {
+        if (!sessionData.length) {
 
-          const latestPositions = Object.values(
-
-            data.reduce((acc: any, item: any) => {
-
-              acc[item.driver_number] = item
-
-              return acc
-
-            }, {})
-
-          )
-
-          setDrivers(latestPositions as any[])
-
-        } else {
-
-          setDrivers([])
+          setLive(false)
+          setLoading(false)
+          return
 
         }
+
+        const session = sessionData[0]
+
+        const now = new Date()
+        const sessionEnd = new Date(session.date_end)
+
+        if (now > sessionEnd) {
+
+          setLive(false)
+          setLoading(false)
+          return
+
+        }
+
+        setLive(true)
+
+        const driversRes = await fetch(
+          `https://api.openf1.org/v1/drivers?session_key=${session.session_key}`
+        )
+
+        const driversData = await driversRes.json()
+
+        const positionsRes = await fetch(
+          `https://api.openf1.org/v1/position?session_key=${session.session_key}`
+        )
+
+        const positionsData = await positionsRes.json()
+
+        const latestPositions = Object.values(
+
+          positionsData.reduce((acc: any, item: any) => {
+
+            acc[item.driver_number] = item
+
+            return acc
+
+          }, {})
+
+        )
+
+        const merged = latestPositions.map((pos: any) => {
+
+          const info = driversData.find(
+            (d: any) => d.driver_number === pos.driver_number
+          )
+
+          return {
+            ...pos,
+            full_name: info?.full_name,
+            team_name: info?.team_name,
+            team_colour: info?.team_colour,
+          }
+
+        })
+
+        merged.sort((a: any, b: any) => a.position - b.position)
+
+        setDrivers(merged)
 
       } catch (error) {
 
@@ -79,7 +124,7 @@ export default function LivePage() {
           در حال دریافت اطلاعات...
         </div>
 
-      ) : drivers.length === 0 ? (
+      ) : !live ? (
 
         <div className="bg-white/5 border border-white/10 rounded-3xl p-10 text-center text-2xl text-gray-300">
 
@@ -107,20 +152,23 @@ export default function LivePage() {
                 <div>
 
                   <div className="text-2xl font-bold">
-                    #{driver.driver_number}
+                    {driver.full_name}
                   </div>
 
                   <div className="text-gray-400 text-sm">
-                    Driver #{driver.driver_number}
+                    {driver.team_name}
                   </div>
 
                 </div>
 
               </div>
 
-              <div className="text-xl font-bold text-green-400">
-                LIVE
-              </div>
+              <div
+                className="w-5 h-5 rounded-full"
+                style={{
+                  backgroundColor: `#${driver.team_colour}`,
+                }}
+              />
 
             </div>
 
@@ -135,3 +183,4 @@ export default function LivePage() {
   )
 
 }
+
