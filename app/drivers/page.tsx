@@ -25,9 +25,10 @@ const drivers = [
 
   {
     slug: "alonso",
-    name: "Fernando Alonso",
-    team: "Aston Martin",
+    name: "فرناندو آلونسو",
+    team: "استون مارتین",
     number: 14,
+    image: "/drivers/alonso.jpg",
   },
 
   {
