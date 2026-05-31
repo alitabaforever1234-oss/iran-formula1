@@ -85,6 +85,13 @@ export default function Navbar() {
             اخبار
           </Link>
 
+          <Link
+            href="/drivers"
+            className="hover:text-red-500 transition"
+          >
+            رانندگان
+          </Link>
+
           <Link href="/live">
             پیست زنده
           </Link>

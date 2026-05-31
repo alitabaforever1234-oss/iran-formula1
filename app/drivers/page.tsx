@@ -68,7 +68,6 @@ export default function DriversPage() {
 
             <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-red-500/40 transition hover:-translate-y-1">
 
-              ```tsx id="k9m1qb"
 <div className="relative h-72 overflow-hidden">
 
   <img
@@ -86,7 +85,7 @@ export default function DriversPage() {
   </div>
 
 </div>
-```
+
 
 
               <div className="p-6">
