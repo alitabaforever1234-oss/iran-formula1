@@ -51,6 +51,112 @@ const races = [
     sprint: false,
   },
 
+{
+  slug: "austria-gp",
+  name: "گرندپری اتریش",
+  date: "۵-۷ تیر",
+  sprint: false,
+},
+
+{
+  slug: "britain-gp",
+  name: "گرندپری بریتانیا",
+  date: "۱۲-۱۴ تیر",
+  sprint: true,
+},
+
+{
+  slug: "belgium-gp",
+  name: "گرندپری بلژیک",
+  date: "۲۶-۲۸ تیر",
+  sprint: false,
+},
+
+{
+  slug: "hungary-gp",
+  name: "گرندپری مجارستان",
+  date: "۲-۴ مرداد",
+  sprint: false,
+},
+
+{
+  slug: "netherlands-gp",
+  name: "گرندپری هلند",
+  date: "۳۰ مرداد - ۱ شهریور",
+  sprint: true,
+},
+
+{
+  slug: "italy-gp",
+  name: "گرندپری ایتالیا",
+  date: "۱۳-۱۵ شهریور",
+  sprint: false,
+},
+
+{
+  slug: "madrid-gp",
+  name: "گرندپری مادرید",
+  date: "۲۰-۲۲ شهریور",
+  sprint: false,
+},
+
+{
+  slug: "azerbaijan-gp",
+  name: "گرندپری آذربایجان",
+  date: "۲-۴ مهر",
+  sprint: false,
+},
+
+{
+  slug: "singapore-gp",
+  name: "گرندپری سنگاپور",
+  date: "۱۷-۱۹ مهر",
+  sprint: true,
+},
+
+{
+  slug: "austin-gp",
+  name: "گرندپری آمریکا",
+  date: "۱-۳ آبان",
+  sprint: false,
+},
+
+{
+  slug: "mexico-gp",
+  name: "گرندپری مکزیک",
+  date: "۸-۱۰ آبان",
+  sprint: false,
+},
+
+{
+  slug: "brazil-gp",
+  name: "گرندپری برزیل",
+  date: "۱۵-۱۷ آبان",
+  sprint: false,
+},
+
+{
+  slug: "las-vegas-gp",
+  name: "گرندپری لاس‌وگاس",
+  date: "۲۸-۳۰ آبان",
+  sprint: false,
+},
+
+{
+  slug: "qatar-gp",
+  name: "گرندپری قطر",
+  date: "۶-۸ آذر",
+  sprint: false,
+},
+
+{
+  slug: "abu-dhabi-gp",
+  name: "گرندپری ابوظبی",
+  date: "۱۳-۱۵ آذر",
+  sprint: false,
+},
+
+
 ]
 
 export default function SchedulePage() {
