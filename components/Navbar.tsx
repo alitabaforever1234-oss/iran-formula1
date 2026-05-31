@@ -85,11 +85,15 @@ export default function Navbar() {
             اخبار
           </Link>
 
+          <Link href="/live">
+            پیست زنده
+          </Link>
+
           <Link
             href="/schedule"
             className="hover:text-red-500 transition"
           >
-            مسابقات
+            تقویم
           </Link>
 
           <Link
@@ -105,14 +109,14 @@ export default function Navbar() {
                 href="/login"
                 className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 transition"
               >
-                Login
+                ورود
               </Link>
 
               <Link
                 href="/signup"
                 className="border border-white/20 px-5 py-2 rounded-xl hover:bg-white/10 transition"
               >
-                Sign Up
+                ثبت نام
               </Link>
             </>
           )}
@@ -124,7 +128,7 @@ export default function Navbar() {
                   href="/admin"
                   className="bg-yellow-500 text-black px-5 py-2 rounded-xl"
                 >
-                  Admin Panel
+                  پنل ادمین
                 </Link>
               )}
 
@@ -132,7 +136,7 @@ export default function Navbar() {
                 onClick={handleLogout}
                 className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 transition"
               >
-                Logout
+                خروج
               </button>
             </>
           )}
