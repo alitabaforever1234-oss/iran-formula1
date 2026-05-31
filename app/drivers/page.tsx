@@ -68,11 +68,26 @@ export default function DriversPage() {
 
             <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-red-500/40 transition hover:-translate-y-1">
 
-              <div className="h-72 bg-gradient-to-br from-red-600 to-black flex items-center justify-center text-7xl font-black">
+              ```tsx id="k9m1qb"
+<div className="relative h-72 overflow-hidden">
 
-                {driver.number}
+  <img
+    src={driver.image}
+    alt={driver.name}
+    className="w-full h-full object-cover"
+  />
 
-              </div>
+  <div className="absolute inset-0 bg-black/40" />
+
+  <div className="absolute bottom-4 left-4 text-6xl font-black text-white">
+
+    #{driver.number}
+
+  </div>
+
+</div>
+```
+
 
               <div className="p-6">
 
