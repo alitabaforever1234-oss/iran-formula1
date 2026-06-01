@@ -5,6 +5,7 @@ export default async function StandingsPage() {
   const { data: standings } = await supabase
     .from("driver_standings")
     .select("*")
+    .order("position", { ascending: true })
 
   return (
 
