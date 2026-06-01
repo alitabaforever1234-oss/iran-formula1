@@ -46,7 +46,17 @@ export default async function StandingsPage() {
         جدول رانندگان
       </h1>
 
-      <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+      <div
+        className="
+        overflow-hidden
+        rounded-[36px]
+        border
+        border-white/15
+        bg-white/[0.03]
+        backdrop-blur-2xl
+        shadow-[0_0_40px_rgba(255,255,255,0.05)]
+        "
+      >
 
         <table className="w-full">
 
@@ -114,7 +124,17 @@ export default async function StandingsPage() {
         جدول سازندگان
       </h2>
 
-      <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+      <div
+        className="
+        overflow-hidden
+        rounded-[36px]
+        border
+        border-white/15
+        bg-white/[0.03]
+        backdrop-blur-2xl
+        shadow-[0_0_40px_rgba(255,255,255,0.05)]
+        "
+      >
 
         <table className="w-full">
 
