@@ -12,27 +12,27 @@ export default async function StandingsPage() {
 
 const teamColors: any = {
 
-  "Mercedes": "text-cyan-400",
+  "مرسدس": "text-cyan-400",
 
-  "Ferrari": "text-red-500",
+  "فراری": "text-red-500",
 
-  "McLaren": "text-orange-400",
+  "مکلارن": "text-orange-400",
 
-  "Red Bull Racing": "text-blue-500",
+  "ردبول": "text-blue-500",
 
-  "Aston Martin": "text-green-500",
+  "استون مارتین": "text-green-500",
 
-  "Alpine": "text-pink-400",
+  "الیپن": "text-pink-400",
 
-  "Williams": "text-blue-300",
+  "ویلیامز": "text-blue-300",
 
-  "Haas": "text-white",
+  "هاس": "text-white",
 
-  "Audi": "text-rose-300",
+  "آئودی": "text-rose-300",
 
-  "Cadillac": "text-gray-300",
+  "کادیلاک": "text-gray-300",
 
-  "RB": "text-indigo-400",
+  "ریسینگ بولز": "text-indigo-400",
 
 }
 
