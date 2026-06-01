@@ -10,6 +10,34 @@ export default async function StandingsPage() {
     .from("constructor_standings")
     .select("*")
 
+const teamColors: any = {
+
+  "Mercedes": "text-cyan-400",
+
+  "Ferrari": "text-red-500",
+
+  "McLaren": "text-orange-400",
+
+  "Red Bull Racing": "text-blue-500",
+
+  "Aston Martin": "text-green-500",
+
+  "Alpine": "text-pink-400",
+
+  "Williams": "text-blue-300",
+
+  "Haas": "text-white",
+
+  "Audi": "text-rose-300",
+
+  "Cadillac": "text-gray-300",
+
+  "RB": "text-indigo-400",
+
+}
+
+
+
   return (
 
     <div className="min-h-screen text-white px-8 md:px-16 py-20">
@@ -47,27 +75,31 @@ export default async function StandingsPage() {
               >
 
                 <td className="p-6 text-red-500 font-black">
-                  {driver.position}
+                  {driver.position.toLocaleString("fa-IR")}
                 </td>
 
-                <td className="p-6 font-bold">
+                <td
+                  className={`p-6 font-bold ${teamColors[driver.team]}`}
+                >
                   {driver.driver_name}
                 </td>
 
-                <td className="p-6 text-gray-300">
+                <td
+                  className={`p-6 ${teamColors[driver.team]}`}
+                >
                   {driver.team}
                 </td>
 
                 <td className="p-6">
-                  {driver.wins}
+                  {driver.wins.toLocaleString("fa-IR")}
                 </td>
 
                 <td className="p-6">
-                  {driver.podiums}
+                  {driver.podiums.toLocaleString("fa-IR")}
                 </td>
 
                 <td className="p-6 text-2xl font-black">
-                  {driver.points}
+                  {driver.points.toLocaleString("fa-IR")}
                 </td>
 
               </tr>
@@ -112,7 +144,7 @@ export default async function StandingsPage() {
         >
 
           <td className="p-6 text-red-500 font-black">
-            {team.position}
+            {team.position.toLocaleString("fa-IR")}
           </td>
 
           <td className="p-6 font-bold text-xl">
@@ -120,15 +152,15 @@ export default async function StandingsPage() {
           </td>
 
           <td className="p-6">
-            {team.wins}
+            {team.wins.toLocaleString("fa-IR")}
           </td>
 
           <td className="p-6">
-            {team.podiums}
+            {team.podiums.toLocaleString("fa-IR")}
           </td>
 
           <td className="p-6 text-2xl font-black">
-            {team.points}
+            {team.points.toLocaleString("fa-IR")}
           </td>
 
         </tr>
