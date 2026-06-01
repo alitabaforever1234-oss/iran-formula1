@@ -5,42 +5,42 @@ export default async function StandingsPage() {
   const { data: standings } = await supabase
     .from("driver_standings")
     .select("*")
-    
+
   const { data: constructors } = await supabase
     .from("constructor_standings")
     .select("*")
 
-const teamColors: any = {
+  const teamColors: any = {
 
-  "مرسدس": "text-cyan-400",
+    "مرسدس": "bg-cyan-400/20",
 
-  "فراری": "text-red-500",
+    "فراری": "bg-red-500/20",
 
-  "مکلارن": "text-orange-400",
+    "مک‌لارن": "bg-orange-400/20",
 
-  "ردبول": "text-blue-500",
+    "ردبول": "bg-blue-500/20",
 
-  "استون مارتین": "text-green-500",
+    "استون مارتین": "bg-green-500/20",
 
-  "الیپن": "text-pink-400",
+    "الپین": "bg-pink-400/20",
 
-  "ویلیامز": "text-blue-300",
+    "ویلیامز": "bg-blue-300/20",
 
-  "هاس": "text-white",
+    "هاس": "bg-white/10",
 
-  "آئودی": "text-rose-300",
+    "آئودی": "bg-rose-300/20",
 
-  "کادیلاک": "text-gray-300",
+    "کادیلاک": "bg-gray-400/20",
 
-  "ریسینگ بولز": "text-indigo-400",
+    "ریسینگ بولز": "bg-indigo-400/20",
 
-}
-
-
+  }
 
   return (
 
     <div className="min-h-screen text-white px-8 md:px-16 py-20">
+
+      {/* Driver Standings */}
 
       <h1 className="text-5xl font-black mb-12">
         جدول رانندگان
@@ -78,16 +78,28 @@ const teamColors: any = {
                   {driver.position.toLocaleString("fa-IR")}
                 </td>
 
-                <td
-                  className={`p-6 font-bold ${teamColors[driver.team]}`}
-                >
-                  {driver.driver_name}
+                <td className="p-6">
+
+                  <div
+                    className={`inline-block px-4 py-2 rounded-2xl font-bold ${teamColors[driver.team]}`}
+                  >
+
+                    {driver.driver_name}
+
+                  </div>
+
                 </td>
 
-                <td
-                  className={`p-6 ${teamColors[driver.team]}`}
-                >
-                  {driver.team}
+                <td className="p-6">
+
+                  <div
+                    className={`inline-block px-4 py-2 rounded-2xl ${teamColors[driver.team]}`}
+                  >
+
+                    {driver.team}
+
+                  </div>
+
                 </td>
 
                 <td className="p-6">
@@ -112,67 +124,76 @@ const teamColors: any = {
 
       </div>
 
-<h2 className="text-5xl font-black mt-24 mb-12">
-  جدول سازندگان
-</h2>
+      {/* Constructor Standings */}
 
-<div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+      <h2 className="text-5xl font-black mt-24 mb-12">
+        جدول سازندگان
+      </h2>
 
-  <table className="w-full">
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5">
 
-    <thead className="bg-white/10 text-right">
+        <table className="w-full">
 
-      <tr>
+          <thead className="bg-white/10 text-right">
 
-        <th className="p-6">رتبه</th>
-        <th className="p-6">تیم</th>
-        <th className="p-6">برد</th>
-        <th className="p-6">سکو</th>
-        <th className="p-6">امتیاز</th>
+            <tr>
 
-      </tr>
+              <th className="p-6">رتبه</th>
+              <th className="p-6">تیم</th>
+              <th className="p-6">برد</th>
+              <th className="p-6">سکو</th>
+              <th className="p-6">امتیاز</th>
 
-    </thead>
+            </tr>
 
-    <tbody>
+          </thead>
 
-      {constructors?.map((team) => (
+          <tbody>
 
-        <tr
-          key={team.id}
-          className="border-t border-white/10 hover:bg-white/5 transition"
-        >
+            {constructors?.map((team) => (
 
-          <td className="p-6 text-red-500 font-black">
-            {team.position.toLocaleString("fa-IR")}
-          </td>
+              <tr
+                key={team.id}
+                className="border-t border-white/10 hover:bg-white/5 transition"
+              >
 
-          <td className="p-6 font-bold text-xl">
-            {team.team_name}
-          </td>
+                <td className="p-6 text-red-500 font-black">
+                  {team.position.toLocaleString("fa-IR")}
+                </td>
 
-          <td className="p-6">
-            {team.wins.toLocaleString("fa-IR")}
-          </td>
+                <td className="p-6">
 
-          <td className="p-6">
-            {team.podiums.toLocaleString("fa-IR")}
-          </td>
+                  <div
+                    className={`inline-block px-4 py-2 rounded-2xl font-bold text-xl ${teamColors[team.team_name]}`}
+                  >
 
-          <td className="p-6 text-2xl font-black">
-            {team.points.toLocaleString("fa-IR")}
-          </td>
+                    {team.team_name}
 
-        </tr>
+                  </div>
 
-      ))}
+                </td>
 
-    </tbody>
+                <td className="p-6">
+                  {team.wins.toLocaleString("fa-IR")}
+                </td>
 
-  </table>
+                <td className="p-6">
+                  {team.podiums.toLocaleString("fa-IR")}
+                </td>
 
-</div>
+                <td className="p-6 text-2xl font-black">
+                  {team.points.toLocaleString("fa-IR")}
+                </td>
 
+              </tr>
+
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
 
     </div>
 
