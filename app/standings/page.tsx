@@ -71,35 +71,19 @@ export default async function StandingsPage() {
 
               <tr
                 key={driver.id}
-                className="border-t border-white/10 hover:bg-white/5 transition"
+                className={`${teamColors[driver.team]} border-t border-white/10 hover:brightness-125 transition`}
               >
 
                 <td className="p-6 text-red-500 font-black">
                   {driver.position.toLocaleString("fa-IR")}
                 </td>
 
-                <td className="p-6">
-
-                  <div
-                    className={`inline-block px-4 py-2 rounded-2xl font-bold ${teamColors[driver.team]}`}
-                  >
-
-                    {driver.driver_name}
-
-                  </div>
-
+                <td className="p-6 font-bold">
+                  {driver.driver_name}
                 </td>
 
                 <td className="p-6">
-
-                  <div
-                    className={`inline-block px-4 py-2 rounded-2xl ${teamColors[driver.team]}`}
-                  >
-
-                    {driver.team}
-
-                  </div>
-
+                  {driver.team}
                 </td>
 
                 <td className="p-6">
@@ -154,23 +138,15 @@ export default async function StandingsPage() {
 
               <tr
                 key={team.id}
-                className="border-t border-white/10 hover:bg-white/5 transition"
+                className={`${teamColors[team.team_name]} border-t border-white/10 hover:brightness-125 transition`}
               >
 
                 <td className="p-6 text-red-500 font-black">
                   {team.position.toLocaleString("fa-IR")}
                 </td>
 
-                <td className="p-6">
-
-                  <div
-                    className={`inline-block px-4 py-2 rounded-2xl font-bold text-xl ${teamColors[team.team_name]}`}
-                  >
-
-                    {team.team_name}
-
-                  </div>
-
+                <td className="p-6 font-bold text-xl">
+                  {team.team_name}
                 </td>
 
                 <td className="p-6">
