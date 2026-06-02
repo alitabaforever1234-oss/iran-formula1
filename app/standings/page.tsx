@@ -12,27 +12,53 @@ export default async function StandingsPage() {
 
   const teamColors: any = {
 
-    "مرسدس": "bg-[#03fce3]",
+    "مرسدس": "bg-cyan-400/30",
 
-    "فراری": "bg-[#fc1403]",
+    "فراری": "bg-red-600/30",
 
-    "مکلارن": "bg-[#fcc203]",
+    "مکلارن": "bg-[#fcc203]/40",
 
-    "ردبول": "bg-[#0c038c]",
+    "ردبول": "bg-blue-600/30",
 
-    "استون مارتین": "bg-[#026607]",
+    "استون مارتین": "bg-green-700/30",
 
-    "الپین": "bg-[#c706ad]",
+    "الپین": "bg-pink-400/30",
 
-    "ویلیامز": "bg-[#1b8ee0]",
+    "ویلیامز": "bg-blue-300/30",
 
-    "هاس": "bg-[#0a0606]",
+    "هاس": "bg-white/10",
 
-    "آئودی": "bg-[#730101]",
+    "آئودی": "bg-[#9c2931]/40",
 
-    "کادیلاک": "bg-[#8c8c8c]",
+    "کادیلاک": "bg-gray-300/30",
 
-    "ریسینگ بولز": "bg-[#54508f]",
+    "ریسینگ بولز": "bg-indigo-500/30",
+
+  }
+
+  const textColors: any = {
+
+    "مرسدس": "text-black",
+
+    "فراری": "text-white",
+
+    "مکلارن": "text-black",
+
+    "ردبول": "text-white",
+
+    "استون مارتین": "text-white",
+
+    "الپین": "text-black",
+
+    "ویلیامز": "text-black",
+
+    "هاس": "text-white",
+
+    "آئودی": "text-white",
+
+    "کادیلاک": "text-black",
+
+    "ریسینگ بولز": "text-white",
 
   }
 
@@ -81,30 +107,39 @@ export default async function StandingsPage() {
 
               <tr
                 key={driver.id}
-                className={`${teamColors[driver.team]} border-t border-white/10 hover:brightness-125 transition`}
+                className={`
+                ${teamColors[driver.team]}
+                ${textColors[driver.team]}
+                border-t
+                ${textColors[driver.team] === "text-black"
+                  ? "border-black/20"
+                  : "border-white/20"}
+                hover:brightness-125
+                transition
+                `}
               >
 
-                <td className="p-6 text-red-500 font-black">
+                <td className={`p-6 font-black ${textColors[driver.team]}`}>
                   {driver.position.toLocaleString("fa-IR")}
                 </td>
 
-                <td className="p-6 font-bold">
+                <td className={`p-6 font-bold ${textColors[driver.team]}`}>
                   {driver.driver_name}
                 </td>
 
-                <td className="p-6">
+                <td className={`p-6 ${textColors[driver.team]}`}>
                   {driver.team}
                 </td>
 
-                <td className="p-6">
+                <td className={`p-6 ${textColors[driver.team]}`}>
                   {driver.wins.toLocaleString("fa-IR")}
                 </td>
 
-                <td className="p-6">
+                <td className={`p-6 ${textColors[driver.team]}`}>
                   {driver.podiums.toLocaleString("fa-IR")}
                 </td>
 
-                <td className="p-6 text-2xl font-black">
+                <td className={`p-6 text-2xl font-black ${textColors[driver.team]}`}>
                   {driver.points.toLocaleString("fa-IR")}
                 </td>
 
@@ -158,26 +193,35 @@ export default async function StandingsPage() {
 
               <tr
                 key={team.id}
-                className={`${teamColors[team.team_name]} border-t border-white/10 hover:brightness-125 transition`}
+                className={`
+                ${teamColors[team.team_name]}
+                ${textColors[team.team_name]}
+                border-t
+                ${textColors[team.team_name] === "text-black"
+                  ? "border-black/20"
+                  : "border-white/20"}
+                hover:brightness-125
+                transition
+                `}
               >
 
-                <td className="p-6 text-red-500 font-black">
+                <td className={`p-6 font-black ${textColors[team.team_name]}`}>
                   {team.position.toLocaleString("fa-IR")}
                 </td>
 
-                <td className="p-6 font-bold text-xl">
+                <td className={`p-6 font-bold text-xl ${textColors[team.team_name]}`}>
                   {team.team_name}
                 </td>
 
-                <td className="p-6">
+                <td className={`p-6 ${textColors[team.team_name]}`}>
                   {team.wins.toLocaleString("fa-IR")}
                 </td>
 
-                <td className="p-6">
+                <td className={`p-6 ${textColors[team.team_name]}`}>
                   {team.podiums.toLocaleString("fa-IR")}
                 </td>
 
-                <td className="p-6 text-2xl font-black">
+                <td className={`p-6 text-2xl font-black ${textColors[team.team_name]}`}>
                   {team.points.toLocaleString("fa-IR")}
                 </td>
 
