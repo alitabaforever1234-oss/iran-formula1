@@ -14,8 +14,10 @@ export default function LivePage() {
 
       try {
 
+        // گرفتن آخرین سشن
+
         const sessionRes = await fetch(
-          "https://api.openf1.org/v1/sessions?session_key=latest"
+          "https://api.openf1.org/v1/sessions"
         )
 
         const sessionData = await sessionRes.json()
@@ -28,21 +30,32 @@ export default function LivePage() {
 
         }
 
-        const session = sessionData[0]
+        // آخرین سشن
+
+        const latestSession =
+          sessionData[sessionData.length - 1]
+
+        // فعال کردن حالت لایو
 
         setLive(true)
 
+        // گرفتن راننده‌ها
+
         const driversRes = await fetch(
-          `https://api.openf1.org/v1/drivers?session_key=${session.session_key}`
+          `https://api.openf1.org/v1/drivers?session_key=${latestSession.session_key}`
         )
 
         const driversData = await driversRes.json()
 
+        // گرفتن پوزیشن‌ها
+
         const positionsRes = await fetch(
-          `https://api.openf1.org/v1/position?session_key=${session.session_key}`
+          `https://api.openf1.org/v1/position?session_key=${latestSession.session_key}`
         )
 
         const positionsData = await positionsRes.json()
+
+        // آخرین پوزیشن هر راننده
 
         const latestPositions = Object.values(
 
@@ -55,6 +68,8 @@ export default function LivePage() {
           }, {})
 
         )
+
+        // ترکیب اطلاعات
 
         const merged = latestPositions.map((pos: any) => {
 
@@ -72,6 +87,8 @@ export default function LivePage() {
 
         })
 
+        // مرتب سازی
+
         merged.sort(
           (a: any, b: any) =>
             a.position - b.position
@@ -82,6 +99,8 @@ export default function LivePage() {
       } catch (error) {
 
         console.log(error)
+
+        setLive(false)
 
       } finally {
 
