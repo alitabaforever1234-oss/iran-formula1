@@ -30,17 +30,22 @@ export default function LivePage() {
 
         const session = sessionData[0]
 
-        const now = new Date()
+       
+const now =
+  new Date().getTime()
 
-        const sessionStart =
-          new Date(session.date_start)
+const sessionStart =
+  new Date(session.date_start).getTime()
 
-        const sessionEnd =
-          new Date(session.date_end)
+const sessionEnd =
+  new Date(session.date_end).getTime()
 
-        const isLive =
-          now >= sessionStart &&
-          now <= sessionEnd
+// ۳۰ دقیقه بافر برای API
+
+const isLive =
+  now >= (sessionStart - 30 * 60 * 1000) &&
+  now <= (sessionEnd + 30 * 60 * 1000)
+
 
         if (!isLive) {
 
