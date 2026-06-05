@@ -31,9 +31,18 @@ export default function LivePage() {
         const session = sessionData[0]
 
         const now = new Date()
-        const sessionEnd = new Date(session.date_end)
 
-        if (now > sessionEnd) {
+        const sessionStart =
+          new Date(session.date_start)
+
+        const sessionEnd =
+          new Date(session.date_end)
+
+        const isLive =
+          now >= sessionStart &&
+          now <= sessionEnd
+
+        if (!isLive) {
 
           setLive(false)
           setLoading(false)
@@ -70,7 +79,8 @@ export default function LivePage() {
         const merged = latestPositions.map((pos: any) => {
 
           const info = driversData.find(
-            (d: any) => d.driver_number === pos.driver_number
+            (d: any) =>
+              d.driver_number === pos.driver_number
           )
 
           return {
@@ -82,7 +92,10 @@ export default function LivePage() {
 
         })
 
-        merged.sort((a: any, b: any) => a.position - b.position)
+        merged.sort(
+          (a: any, b: any) =>
+            a.position - b.position
+        )
 
         setDrivers(merged)
 
@@ -134,45 +147,70 @@ export default function LivePage() {
 
       ) : (
 
-        <div className="space-y-4">
+        <div>
 
-          {drivers.map((driver: any) => (
+          {/* Live Badge */}
 
-            <div
-              key={driver.driver_number}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 flex items-center justify-between"
-            >
+          <div className="mb-10">
 
-              <div className="flex items-center gap-6">
+            <div className="inline-flex items-center gap-3 bg-red-500/20 border border-red-500/30 px-6 py-3 rounded-full">
 
-                <div className="text-3xl font-black text-red-500 w-16">
-                  P{driver.position}
-                </div>
+              <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse" />
 
-                <div>
+              <span className="font-bold text-red-400">
 
-                  <div className="text-2xl font-bold">
-                    {driver.full_name}
-                  </div>
+                جلسه زنده درحال برگزاری
 
-                  <div className="text-gray-400 text-sm">
-                    {driver.team_name}
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div
-                className="w-5 h-5 rounded-full"
-                style={{
-                  backgroundColor: `#${driver.team_colour}`,
-                }}
-              />
+              </span>
 
             </div>
 
-          ))}
+          </div>
+
+          {/* Leaderboard */}
+
+          <div className="space-y-4">
+
+            {drivers.map((driver: any) => (
+
+              <div
+                key={driver.driver_number}
+                className="bg-white/5 border border-white/10 rounded-2xl p-6 flex items-center justify-between"
+              >
+
+                <div className="flex items-center gap-6">
+
+                  <div className="text-3xl font-black text-red-500 w-16">
+                    P{driver.position}
+                  </div>
+
+                  <div>
+
+                    <div className="text-2xl font-bold">
+                      {driver.full_name}
+                    </div>
+
+                    <div className="text-gray-400 text-sm">
+                      {driver.team_name}
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div
+                  className="w-5 h-5 rounded-full"
+                  style={{
+                    backgroundColor:
+                      `#${driver.team_colour}`,
+                  }}
+                />
+
+              </div>
+
+            ))}
+
+          </div>
 
         </div>
 
@@ -183,4 +221,3 @@ export default function LivePage() {
   )
 
 }
-
